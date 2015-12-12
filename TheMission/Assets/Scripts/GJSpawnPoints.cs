@@ -9,7 +9,7 @@ namespace Assets
         private float m_radius;
         private Vector3 m_spawnPoint;
         private int m_targetAmount;
-        private float m_minDistance;
+        //private float m_minDistance;
 
         private float m_maxYHeight;
         private float m_minYHeight;

@@ -6,22 +6,23 @@ using Assets;
 public class GJSpawnManager : MonoBehaviour {
 
     #region members
-    private GJTargets m_targetsGenerator;
+    //private GJTargets m_targetsGenerator;
     private IList<Vector3> m_spawnPoints;
     
     private GJSpawnPoints m_spawnPointGenerator;
     private static GJSpawnManager m_instance;
+    private GJPool pool;
 
     //public Transform TargetsPrefab;
     //public int TargetsAmount;
     //public int TargetsRadius;
-    public Transform SpawnPrefab;
-    public int SpawnAmount;
-    public int SpawnRadius;
-    public float MaxHeightLimit;
-    public float MinHeightLimit;
-    public Transform[] Targets  ;
-    public Transform[] Metiors;
+    public GameObject spawnPrefab;
+    public int spawnAmount;
+    public int spawnRadius;
+    public float maxHeightLimit;
+    public float minHeightLimit;
+    public Transform targetPostion;
+    //public Transform[] Metiors;
     #endregion
 
     #region mono functions
@@ -46,17 +47,21 @@ public class GJSpawnManager : MonoBehaviour {
         //    //Debug.Log(target);
         //    Instantiate(TargetsPrefab, target, Quaternion.identity);
         //}
-        var _metiors = new List<Transform>();
-        m_spawnPointGenerator = new GJSpawnPoints(SpawnRadius, transform.position, SpawnAmount, MaxHeightLimit,MinHeightLimit);
+        pool = new GJPool(spawnPrefab);
+        List<GameObject> astoids = new List<GameObject>();
+        m_spawnPointGenerator = new GJSpawnPoints(spawnRadius, transform.position, spawnAmount, maxHeightLimit, minHeightLimit);
         m_spawnPoints = m_spawnPointGenerator.generateSpawnPoints();
-        foreach (var spawn in m_spawnPoints)
+        foreach (Vector3 spawn in m_spawnPoints)
         {
-            //Debug.Log(spawn);
-            Transform add = Instantiate(SpawnPrefab, spawn, Quaternion.identity) as Transform;
-            add.gameObject.AddComponent<GJMeteor>().Target = Target;     
-            _metiors.Add(add);
+            Debug.Log("this is the spawprefab" + spawnPrefab);
+            GJMeteor asteroid = pool.retrieveNonActiveFromPool.GetComponent<GJMeteor>();
+            asteroid.Target = Target;
+            asteroid.gameObject.transform.position = spawn;
+            asteroid.gameObject.SetActive(true);
+
+            //metiors.Add(add);
         }
-        Metiors = _metiors.ToArray();
+        //Metiors = metiors.ToArray();
        
 
     }
@@ -96,8 +101,8 @@ public class GJSpawnManager : MonoBehaviour {
     {
         get
         {
-            int index = Random.Range(0, Targets.Length);
-            return Targets[index].position;
+            //int index = Random.Range(0, Targets.Length);
+            return targetPostion.position;
         }
     }
     #endregion
