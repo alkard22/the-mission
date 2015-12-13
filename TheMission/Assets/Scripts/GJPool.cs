@@ -9,15 +9,16 @@ public class GJPool:MonoBehaviour
 
     #region members
     private IList<GameObject> m_pool;
-    private int m_poolSize = 5;
+    public int m_poolSize = 5;
     private GameObject m_cloneObject;
     #endregion
 
     #region constructors
 
-    public GJPool(GameObject cloneObject)
+    public GJPool(GameObject cloneObject,int poolSize = 5)
     {
         m_cloneObject = cloneObject;
+        m_poolSize = poolSize;
         populatePool();
     }
     #endregion

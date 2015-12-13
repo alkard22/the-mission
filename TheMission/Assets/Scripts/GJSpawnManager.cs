@@ -23,6 +23,7 @@ public class GJSpawnManager : MonoBehaviour {
     public float maxHeightLimit;
     public float minHeightLimit;
     public Transform targetPostion;
+    public int PoolSize;
     //public Transform[] Metiors;
     #endregion
 
@@ -43,7 +44,7 @@ public class GJSpawnManager : MonoBehaviour {
        
       
         m_aliveCount = 0;
-        m_pool = new GJPool(spawnPrefab);
+        m_pool = new GJPool(spawnPrefab, PoolSize);
        
         m_spawnPointGenerator = new GJSpawnPoints(SpawnRadius, transform.position, m_aliveCount, maxHeightLimit, minHeightLimit);
         StartCoroutine(Spawn());
