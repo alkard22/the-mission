@@ -20,31 +20,55 @@ public class GJMeteor : MonoBehaviour {
 	void Update () {
        
     }
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("collided with " + other.name);
+        if (other.name == "Earth")
+        {
+            destroy();    
+        }
+        else
+        {
+            other.GetComponent<GJMeteor>().destroy();
+        }
+        
+    }
     #endregion
 
     #region public functions
 
     public void destroy()
     {
+        Debug.Log("Destroy");
         this.gameObject.SetActive(false);
         GJSpawnManager.Instance.AliveCount--;
     }
+
+    public void startMovement()
+    {
+        StartCoroutine(moveFoward());
+    }
+    #endregion
 
     #region private functions
 
     private IEnumerator moveFoward()
     {
-        Vector3 relativePosition = (m_target - m_transform.position).normalized;
-        Vector3 targetMovePosition = m_target - (relativePosition * 2f);
-
+        Vector3 targetMovePosition = m_target;
+        float distance = 0;
+        distance = Vector3.Distance(m_transform.position, targetMovePosition);
+        float speed = Random.Range(1f, 5f);
         m_transform.LookAt(m_target);
-        while (m_target != targetMovePosition)
+        float distanceToStopAt = 0.1f;
+        while (distanceToStopAt < distance)
         {
 
-            m_transform.position = Vector3.MoveTowards(m_transform.position, targetMovePosition, Time.deltaTime * 5f);
-
+            m_transform.position = Vector3.MoveTowards(m_transform.position, targetMovePosition, Time.deltaTime * speed);
+            distance = Vector3.Distance(m_transform.position, targetMovePosition);
             yield return null;
         }
+        
+        //destroy();
         yield break;
     }
     #endregion

@@ -11,14 +11,15 @@ public class GJSpawnManager : MonoBehaviour {
     
     private GJSpawnPoints m_spawnPointGenerator;
     private static GJSpawnManager m_instance;
-    private GJPool pool;
+    private GJPool m_pool;
+    private int m_aliveCount;
 
     //public Transform TargetsPrefab;
     //public int TargetsAmount;
     //public int TargetsRadius;
     public GameObject spawnPrefab;
-    public int spawnAmount;
-    public int spawnRadius;
+    public int SpawnAmount;
+    public int SpawnRadius;
     public float maxHeightLimit;
     public float minHeightLimit;
     public Transform targetPostion;
@@ -40,29 +41,12 @@ public class GJSpawnManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
        
-        //m_targetsGenerator = new GJTargets(TargetsRadius, transform.position, TargetsAmount);
-        //_targets = m_targetsGenerator.generateTargets();
-        //foreach(var target in _targets)
-        //{
-        //    //Debug.Log(target);
-        //    Instantiate(TargetsPrefab, target, Quaternion.identity);
-        //}
-        pool = new GJPool(spawnPrefab);
-        List<GameObject> astoids = new List<GameObject>();
-        m_spawnPointGenerator = new GJSpawnPoints(spawnRadius, transform.position, spawnAmount, maxHeightLimit, minHeightLimit);
-        m_spawnPoints = m_spawnPointGenerator.generateSpawnPoints();
-        foreach (Vector3 spawn in m_spawnPoints)
-        {
-            Debug.Log("this is the spawprefab" + spawnPrefab);
-            GJMeteor asteroid = pool.retrieveNonActiveFromPool.GetComponent<GJMeteor>();
-            asteroid.Target = Target;
-            asteroid.gameObject.transform.position = spawn;
-            asteroid.gameObject.SetActive(true);
-
-            //metiors.Add(add);
-        }
-        //Metiors = metiors.ToArray();
+      
+        m_aliveCount = 0;
+        m_pool = new GJPool(spawnPrefab);
        
+        m_spawnPointGenerator = new GJSpawnPoints(SpawnRadius, transform.position, m_aliveCount, maxHeightLimit, minHeightLimit);
+        StartCoroutine(Spawn());
 
     }
 	
@@ -105,8 +89,32 @@ public class GJSpawnManager : MonoBehaviour {
             return targetPostion.position;
         }
     }
+
+    public int AliveCount
+    {
+        get { return m_aliveCount; }
+        set { m_aliveCount = value; }
+    }
+
+    
     #endregion
 
     #region private functions
+    
+    private IEnumerator Spawn()
+    {
+      
+        yield return new WaitForSeconds(1);
+        if (m_aliveCount < SpawnAmount)
+        {
+            GameObject obj =  m_pool.retrieveNonActiveFromPool;
+            obj.transform.position = m_spawnPointGenerator.GenerateSpawnPoint();
+            obj.SetActive(true);
+            obj.GetComponent<GJMeteor>().startMovement();
+            AliveCount ++;
+        }
+
+        yield return Spawn();
+    }
     #endregion
 }
