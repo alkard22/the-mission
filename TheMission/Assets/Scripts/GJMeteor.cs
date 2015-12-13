@@ -22,6 +22,14 @@ public class GJMeteor : MonoBehaviour {
     }
     #endregion
 
+    #region public functions
+
+    public void destroy()
+    {
+        this.gameObject.SetActive(false);
+        GJSpawnManager.Instance.AliveCount--;
+    }
+
     #region private functions
 
     private IEnumerator moveFoward()

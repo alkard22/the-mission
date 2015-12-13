@@ -38,6 +38,7 @@ public class DemoFollowScript3D : MonoBehaviour {
         {
             // We don't want to change our Z position (to keep sprite Z ordering correct), so we ignore the Z value coming in from the Vector2.Lerp below...
             newPosition = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
+            Debug.Log("Newposition is " + newPosition);
             transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.z);
         }
     }

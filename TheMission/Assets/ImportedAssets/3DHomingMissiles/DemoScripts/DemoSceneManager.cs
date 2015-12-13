@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class DemoSceneManager : MonoBehaviour
 {
-    public SmoothFollowCSharp CameraFollowCSharp;
+    //public SmoothFollowCSharp CameraFollowCSharp;
     public Camera MissileCamera;
     public DemoRandomPositionMover3D targetMoverScriptRef;
     public int maxMissiles = 10;
@@ -37,7 +37,7 @@ public class DemoSceneManager : MonoBehaviour
         MissileCameraEnabled = true;
     }
 
-    void OnGUI()
+    /*void OnGUI()
     {
         missileSpeedSliderValue = GUI.HorizontalSlider(new Rect(25, 40, 200, 20), missileSpeedSliderValue, 0.05F, 1.5F);
 		missileProportionalConstSliderValue = GUI.HorizontalSlider(new Rect(25, 90, 200, 20), missileProportionalConstSliderValue, 0.05F, 1.0F);
@@ -64,7 +64,7 @@ public class DemoSceneManager : MonoBehaviour
         }
 
         activeMissiles.text = "Current active missiles: " + missileColletion.Count + "/10";
-    }
+    }*/
 	
 	// Update is called once per frame
 	void Update ()
@@ -94,7 +94,7 @@ public class DemoSceneManager : MonoBehaviour
                 missileColletion.Add(newMissile);
 
                 // Update missile cam to follow the newest missile added
-                CameraFollowCSharp.target = newMissile.transform;
+                //CameraFollowCSharp.target = newMissile.transform;
 	        }
 	    }
 
