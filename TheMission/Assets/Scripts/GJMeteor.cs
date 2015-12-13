@@ -10,9 +10,14 @@ public class GJMeteor : MonoBehaviour {
 
     #region mono functions
     // Use this for initialization
+    void Awake()
+    {
+       
+        m_transform = this.gameObject.transform;
+        
+    }
     void Start () {
         m_target = GJSpawnManager.Instance.Target;
-        m_transform = this.gameObject.transform;
        StartCoroutine(moveFoward());
     }
 	
@@ -22,8 +27,8 @@ public class GJMeteor : MonoBehaviour {
     }
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("collided with " + other.name);
-        if (other.name == "Earth")
+        //Debug.Log("collided with " + other.name);
+        if (other.name == "EarthContainer")
         {
             destroy();    
         }
@@ -39,7 +44,7 @@ public class GJMeteor : MonoBehaviour {
 
     public void destroy()
     {
-        Debug.Log("Destroy");
+        //Debug.Log("Destroy");
         this.gameObject.SetActive(false);
         GJSpawnManager.Instance.AliveCount--;
     }
@@ -56,8 +61,9 @@ public class GJMeteor : MonoBehaviour {
     {
         Vector3 targetMovePosition = m_target;
         float distance = 0;
+       
         distance = Vector3.Distance(m_transform.position, targetMovePosition);
-        float speed = Random.Range(1f, 5f);
+        float speed = Random.Range(0.5f, 2f);
         m_transform.LookAt(m_target);
         float distanceToStopAt = 0.1f;
         while (distanceToStopAt < distance)
