@@ -66,11 +66,13 @@ public class GJMeteor : MonoBehaviour {
         float speed = Random.Range(0.5f, 2f);
         m_transform.LookAt(m_target);
         float distanceToStopAt = 0.1f;
-        while (distanceToStopAt < distance)
+        Vector3 moveto = m_transform.forward * 2f;
+        while (true)
         {
-
-            m_transform.position = Vector3.MoveTowards(m_transform.position, targetMovePosition, Time.deltaTime * speed);
-            distance = Vector3.Distance(m_transform.position, targetMovePosition);
+            moveto = m_transform.position + (m_transform.forward * 2f);
+            m_transform.position = Vector3.MoveTowards(m_transform.position,moveto, Time.deltaTime * speed);
+            Debug.Log(m_transform.position);
+            //distance = Vector3.Distance(m_transform.position, targetMovePosition);
             yield return null;
         }
         
