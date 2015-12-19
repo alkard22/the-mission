@@ -111,7 +111,7 @@ public class GJSpawnManager : MonoBehaviour {
             GameObject obj =  m_pool.retrieveNonActiveFromPool;
             obj.transform.position = m_spawnPointGenerator.GenerateSpawnPoint();
             obj.SetActive(true);
-            obj.GetComponent<GJMeteor>().startMovement();
+            obj.GetComponent<AGJAsteriod>().startMovement();
             AliveCount ++;
         }
 
