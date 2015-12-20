@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GJSmAsteroid:AGJAsteriod
+
+public class GJMediumAsteroid : AGJAsteriod
 {
     #region members
     [SerializeField]
@@ -11,7 +12,7 @@ public class GJSmAsteroid:AGJAsteriod
     #endregion
 
     #region mono functions
-    new void  Start()
+    new void Start()
     {            
         MinSpeed = Min_Speed;
         MaxSpeed = Max_Speed;

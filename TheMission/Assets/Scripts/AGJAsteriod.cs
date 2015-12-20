@@ -22,7 +22,7 @@ using System.Collections;
         public void Start()
         {
             m_target = GJSpawnManager.Instance.Target;
-            StartCoroutine(moveFoward());
+            StartCoroutine(MoveFoward());
         }
         // Update is called once per frame
         void Update()
@@ -34,33 +34,34 @@ using System.Collections;
             //Debug.Log("collided with " + other.name);
             if (other.name == "EarthContainer")
             {
-                destroy();
+                Destroy();
             }
             else
             {
-                other.GetComponent<AGJAsteriod>().destroy();
+                other.GetComponent<AGJAsteriod>().Destroy();
             }
 
         }
         #endregion
+
         #region public functions
 
-        public void destroy()
+        public void Destroy()
         {
 
             this.gameObject.SetActive(false);
             GJSpawnManager.Instance.AliveCount--;
         }
 
-        public void startMovement()
+        public void StartMovement()
         {
-            StartCoroutine(moveFoward());
+            StartCoroutine(MoveFoward());
         }
         #endregion
 
         #region private functions
 
-        private IEnumerator moveFoward()
+        private IEnumerator MoveFoward()
         {
             Vector3 targetMovePosition = m_target;
             float distance = 0;

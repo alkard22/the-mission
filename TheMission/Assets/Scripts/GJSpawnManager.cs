@@ -74,7 +74,7 @@ public class GJSpawnManager : MonoBehaviour {
         }
     }
 
-    public static bool isAwake
+    public static bool IsAwake
     {
         get
         {
@@ -111,7 +111,7 @@ public class GJSpawnManager : MonoBehaviour {
             GameObject obj =  m_pool.retrieveNonActiveFromPool;
             obj.transform.position = m_spawnPointGenerator.GenerateSpawnPoint();
             obj.SetActive(true);
-            obj.GetComponent<AGJAsteriod>().startMovement();
+            obj.GetComponent<AGJAsteriod>().StartMovement();
             AliveCount ++;
         }
 
