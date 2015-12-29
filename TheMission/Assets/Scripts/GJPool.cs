@@ -28,7 +28,7 @@ public class GJPool:MonoBehaviour
 
     #region properties
 
-    public GameObject retrieveNonActiveFromPool
+    public GameObject RetrieveNonActiveFromPool
     {
         get
         {

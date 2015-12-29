@@ -11,13 +11,17 @@ public class GJSpawnManager : MonoBehaviour {
     
     private GJSpawnPoints m_spawnPointGenerator;
     private static GJSpawnManager m_instance;
-    private GJPool m_pool;
+    private GJPool m_smallPool;
+    private GJPool m_mediumPool;
+    private GJPool m_largePool;
     private int m_aliveCount;
 
     //public Transform TargetsPrefab;
     //public int TargetsAmount;
     //public int TargetsRadius;
-    public GameObject spawnPrefab;
+    public GameObject LargeAsteroidsSpawnPrefab;
+    public GameObject MediumAsteroidsSpawnPrefab;
+    public GameObject SmallAsteroidsSpawnPrefab;
     public int SpawnAmount;
     public int SpawnRadius;
     public float maxHeightLimit;
@@ -44,8 +48,9 @@ public class GJSpawnManager : MonoBehaviour {
        
       
         m_aliveCount = 0;
-        m_pool = new GJPool(spawnPrefab, PoolSize);
-       
+        m_smallPool = new GJPool(SmallAsteroidsSpawnPrefab, PoolSize);
+        m_mediumPool = new GJPool(MediumAsteroidsSpawnPrefab, PoolSize);
+        m_largePool = new GJPool(LargeAsteroidsSpawnPrefab, PoolSize);
         m_spawnPointGenerator = new GJSpawnPoints(SpawnRadius, transform.position, m_aliveCount, maxHeightLimit, minHeightLimit);
         StartCoroutine(Spawn());
 
@@ -108,7 +113,8 @@ public class GJSpawnManager : MonoBehaviour {
         yield return new WaitForSeconds(1);
         if (m_aliveCount < SpawnAmount)
         {
-            GameObject obj =  m_pool.retrieveNonActiveFromPool;
+            GameObject obj = null;
+            obj = GetAseteroid();
             obj.transform.position = m_spawnPointGenerator.GenerateSpawnPoint();
             obj.SetActive(true);
             obj.GetComponent<AGJAsteriod>().StartMovement();
@@ -116,6 +122,26 @@ public class GJSpawnManager : MonoBehaviour {
         }
 
         yield return Spawn();
+    }
+
+    private GameObject GetAseteroid()
+    {
+        GameObject asteroid =null;
+        float randomValue = Random.value;
+        if(randomValue <= 0.4 ) //40% chance
+        {            
+            asteroid = m_smallPool.RetrieveNonActiveFromPool;
+        }
+        else if (randomValue > 0.65) //35% chance
+        {
+            asteroid = m_mediumPool.RetrieveNonActiveFromPool;
+        }
+        else //this is only a 25% of chance
+        {
+            asteroid = m_largePool.RetrieveNonActiveFromPool;
+        }
+        
+        return asteroid;
     }
     #endregion
 }
