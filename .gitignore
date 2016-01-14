@@ -40,3 +40,6 @@ ExportedObj/
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# Quick Fix for .dll Issue
+!*.dll
