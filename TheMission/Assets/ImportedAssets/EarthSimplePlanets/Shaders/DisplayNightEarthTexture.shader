@@ -1,4 +1,6 @@
-﻿Shader "Custom/DisplayNightEarthTexture" {
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "Custom/DisplayNightEarthTexture" {
 	Properties {
 _MainTex ("Base (RGB)", 2D) = "white" { }
 _SpotAngle ("Spot Angle", Float) = 30.0
@@ -34,7 +36,7 @@ v2f_interpolated vert(appdata_full v){
 v2f_interpolated o;
 o.texCoord.xy = v.texcoord.xy;
 o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-half3 worldSpaceVertex = mul(_Object2World, v.vertex).xyz;
+half3 worldSpaceVertex = mul(unity_ObjectToWorld, v.vertex).xyz;
 // calculate light direction to vertex
 o.lightDir = worldSpaceVertex-_LightPos.xyz;
 return o;
